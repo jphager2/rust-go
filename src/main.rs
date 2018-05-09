@@ -24,30 +24,45 @@ impl Board {
     }
 
     fn place(&mut self, color: &StoneColor, coord: (u32, u32)) {
+        let i = self.coord_index(coord);
+        self.board[i] = if let &StoneColor::Black = color {
+                            black_stone()
+                        } else {
+                            white_stone()
+                        }
+    }
+
+    fn remove(&mut self, coord: (u32, u32)) {
+        let i = self.coord_index(coord);
+        self.board[i] = liberty();
+    }
+
+    fn coord_index(&self, coord: (u32, u32)) -> usize {
         let row = coord.0;
         let column = coord.1;
-        let i = (row * self.size + column) as usize;
-        let stone = match color {
-            &StoneColor::Black => black_stone(),
-            &StoneColor::White => white_stone(),
-            &StoneColor::Liberty => liberty(),
-        };
 
-        self.board[i] = stone;
+        (row * self.size + column) as usize
     }
 
     fn print(&self) {
+        print!("- ");
+        for col in 0..self.size {
+            print!("{} ", col);
+        }
+        println!("");
+        print!("  ");
+        for _ in 0..self.size {
+            print!("__");
+        }
+        println!("");
         for row in 0..self.size {
+            print!("{}|", row);
             for col in 0..self.size {
                 let i: usize = (row * self.size + col) as usize;
-                if i >= self.board.len() {
-                    print!("- ");
-                } else {
-                    match self.board[i].color {
-                        StoneColor::Black => print!("X "),
-                        StoneColor::White => print!("0 "),
-                        StoneColor::Liberty => print!("- "),
-                    }
+                match self.board[i].color {
+                    StoneColor::Black => print!("◯ "),
+                    StoneColor::White => print!("⬤ "),
+                    StoneColor::Liberty => print!("+ "),
                 }
             }
             println!("");
@@ -131,5 +146,7 @@ fn main() {
         board.place(&color, (row, column));
 
         turn = turn + 1;
+
+        board.remove((8, 0));
     }
 }
