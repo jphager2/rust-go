@@ -3,16 +3,16 @@ extern crate igo;
 use std::io;
 
 fn main() {
-    let mut board = igo::Board::new(9);
+    let mut board = igo::board(9);
     let mut turn = 0;
 
     loop {
-        board.print();
+        igo::print_board(&board);
 
         let color = if turn % 2 == 0 {
-                        igo::StoneColor::Black
+                        igo::black()
                     } else {
-                        igo::StoneColor::White
+                        igo::white()
                     };
         let mut row = String::new();
         let mut column = String::new();
