@@ -1,6 +1,14 @@
 [package]
-name = "go"
+name = "igo"
 version = "0.1.0"
 authors = ["jphager2 <jphager2@gmail.com>"]
 
 [dependencies]
+
+[lib]
+name = "igo"
+path = "src/lib.rs"
+
+[[bin]]
+name = "igo"
+path = "src/main.rs"
