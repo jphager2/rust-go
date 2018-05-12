@@ -4,11 +4,11 @@ mod stone;
 use board::Board;
 use stone::StoneColor;
 
-pub fn black() -> StoneColor {
+pub fn black_stone() -> StoneColor {
     StoneColor::Black
 }
 
-pub fn white() -> StoneColor {
+pub fn white_stone() -> StoneColor {
     StoneColor::White
 }
 
@@ -18,18 +18,18 @@ pub fn board(size: u32) -> Board {
 
 pub fn print_board(board: &Board) {
     print!("- ");
-    for col in 0..board.size {
-        print!("{} ", col);
+    for col in 1..(board.size + 1) {
+        print!("{} ", ((col + 96) as u8) as char);
     }
     println!("");
     print!("  ");
-    for _ in 0..board.size {
+    for _ in 1..(board.size + 1) {
         print!("__");
     }
     println!("");
-    for row in 0..board.size {
+    for row in 1..(board.size + 1) {
         print!("{}|", row);
-        for col in 0..board.size {
+        for col in 1..(board.size + 1) {
             match board.at((row, col)).color {
                 StoneColor::Black => print!("◯ "),
                 StoneColor::White => print!("⬤ "),
@@ -39,7 +39,6 @@ pub fn print_board(board: &Board) {
         println!("");
     }
 }
-
 
 #[cfg(test)]
 mod tests {

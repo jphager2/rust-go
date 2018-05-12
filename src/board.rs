@@ -26,13 +26,18 @@ impl Board {
         &self.board[i]
     }
 
-    pub fn place(&mut self, color: &StoneColor, coord: (u32, u32)) {
+    pub fn place(&mut self, color: &StoneColor, coord: (u32, u32)) -> Result<usize, &str> {
         let i = self.coord_index(coord);
+        println!("i: {}; len: {}", i, self.board.len());
+        if i >= self.board.len() {
+            return Result::Err("Can't place stone off the board!")
+        }
         self.board[i] = if let &StoneColor::Black = color {
                             Stone::black_stone()
                         } else {
                             Stone::white_stone()
-                        }
+                        };
+        Result::Ok(i)
     }
 
     pub fn remove(&mut self, coord: (u32, u32)) {
@@ -41,8 +46,8 @@ impl Board {
     }
 
     fn coord_index(&self, coord: (u32, u32)) -> usize {
-        let row = coord.0;
-        let column = coord.1;
+        let row = coord.0 - 1;
+        let column = coord.1 - 1;
 
         (row * self.size + column) as usize
     }
