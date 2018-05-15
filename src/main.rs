@@ -38,7 +38,6 @@ fn main() {
             break;
         }
         let column = column_char as u32;
-        println!("col: {}, row: {}", column, row);
 
         match board.place(&color, (row, column)) {
             Ok(_) => turn = turn + 1,

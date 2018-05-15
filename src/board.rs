@@ -28,10 +28,11 @@ impl Board {
 
     pub fn place(&mut self, color: &StoneColor, coord: (u32, u32)) -> Result<usize, &str> {
         let i = self.coord_index(coord);
-        println!("i: {}; len: {}", i, self.board.len());
+        
         if i >= self.board.len() {
             return Result::Err("Can't place stone off the board!")
         }
+
         self.board[i] = if let &StoneColor::Black = color {
                             Stone::black_stone()
                         } else {
