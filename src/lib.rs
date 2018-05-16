@@ -1,5 +1,6 @@
 mod board;
 mod stone;
+mod rules;
 
 use board::Board;
 use stone::StoneColor;
@@ -10,6 +11,15 @@ pub fn black_stone() -> StoneColor {
 
 pub fn white_stone() -> StoneColor {
     StoneColor::White
+}
+
+pub fn apply_rules(board: &Board, color: &StoneColor, coord: (u32, u32)) -> Result<bool, str> {
+    match rules::apply(&board, &color, coord) {
+        Ok(_) => (),
+        Err(_) => return Result::Err("Some rule was broken")
+    };
+
+    Result::Ok(true)
 }
 
 pub fn board(size: u32) -> Board {

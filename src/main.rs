@@ -39,9 +39,30 @@ fn main() {
         }
         let column = column_char as u32;
 
+        let mut rollback = false;
+
         match board.place(&color, (row, column)) {
-            Ok(_) => turn = turn + 1,
-            Err(e) => println!("{}", e),
+            Ok(_) => (),
+            Err(e) => {
+                rollback = true;
+                println!("{}", e);
+            }
         };
+
+        for rule in igo.rules {
+            match rule.apply(&board, &color, (row,column)) {
+                Ok(_) => (),
+                Err(e) => {
+                    rollback = true;
+                    println!("{}", e);
+                },
+            }
+        }
+
+        if rollback {
+            board.remove((row, column));
+        } else {
+            turn += 1;
+        }
     }
 }
