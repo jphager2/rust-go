@@ -25,7 +25,7 @@ impl Board {
         &self.board[i]
     }
 
-    pub fn place(&mut self, color: &StoneColor, coord: (u32, u32)) -> Result<usize, str> {
+    pub fn place(&mut self, color: &StoneColor, coord: (u32, u32)) -> Result<usize, &'static str> {
         let i = self.coord_index(coord);
         
         if i >= self.board.len() {

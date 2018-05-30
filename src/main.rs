@@ -49,14 +49,12 @@ fn main() {
             }
         };
 
-        for rule in igo.rules {
-            match rule.apply(&board, &color, (row,column)) {
-                Ok(_) => (),
-                Err(e) => {
-                    rollback = true;
-                    println!("{}", e);
-                },
-            }
+        match igo::apply_rules(&mut board, &color, (row, column)) {
+            Ok(_) => (),
+            Err(e) => {
+                rollback = true;
+                println!("{}", e);
+            },
         }
 
         if rollback {

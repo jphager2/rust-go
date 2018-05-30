@@ -13,8 +13,8 @@ pub fn white_stone() -> StoneColor {
     StoneColor::White
 }
 
-pub fn apply_rules(board: &Board, color: &StoneColor, coord: (u32, u32)) -> Result<bool, str> {
-    match rules::apply(&board, &color, coord) {
+pub fn apply_rules(mut board: &mut Board, color: &StoneColor, coord: (u32, u32)) -> Result<bool, &'static str> {
+    match rules::apply(&mut board, &color, coord) {
         Ok(_) => (),
         Err(_) => return Result::Err("Some rule was broken")
     };
